@@ -1,5 +1,4 @@
 import sys
-# from pyspark.sql import Row
 from common.spark_session import SparkSessionInstance
 from pipelines.extract import get_open_food_fact_dataset
 from common.utils import log_message
@@ -13,21 +12,23 @@ def main():
 
     try:
         spark = SparkSessionInstance.get_instance()
-        dataset = get_open_food_fact_dataset(10)
-        # print(dataset[:2])
+        dataset = get_open_food_fact_dataset()
+        # log_message("INFO", f"test: {dataset[:2]}")
 
-        df = spark.createDataFrame([{"_id":"0000105000011", "product_type":"food"}, {"_id":"3333333333333", "product_type":"lol"}])
-        # df = spark.createDataFrame(dataset, RAW_DATA_SCHEMA_OFF)
-        # df.select("id", "product_name").show()
-        df.count()
-        # df.show(2)
+        df = spark.createDataFrame(dataset, RAW_DATA_SCHEMA_OFF)
+        df.select("id", "product_name", "product_type").show(5)
 
         if global_conf.get('GENERAL.ENV') == "dev":
-            # res = write_to_postgres(df, global_conf.get("POSTGRES.DB_POSTGRES_DEFAULT_RAW_TABLE"), global_conf.get("POSTGRES.DB_POSTGRES_DEFAULT_SCHEMA"))
-            pass
+            res = write_to_postgres(df, 
+                                    global_conf.get("DATASET.DEFAULT_RAW_TABLE"), 
+                                    global_conf.get("POSTGRES.DB_POSTGRES_DEFAULT_SCHEMA")
+                                    )
         else:
-            # TODO BigQuery
-            pass
+            res = write_to_bq(df, 
+                            global_conf.get("GCP.GCP_PROJECT_ID"), 
+                            global_conf.get("GCP.GCP_BIGQUERY_DATASET"), 
+                            global_conf.get("DATASET.DEFAULT_RAW_TABLE")
+                            )
 
     except Exception as e:
         log_message("ERROR", f"An error occurred during init: {str(e)}")

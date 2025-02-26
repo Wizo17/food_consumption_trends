@@ -4,7 +4,7 @@ from pyspark.sql.types import *
 
 DATA_KEYS_OFF = ["id", "_keywords", "allergens_from_ingredients", "brands", "categories", "categories_hierarchy",
             "countries", "countries_imported", "ecoscore_grade", "ecoscore_score", "generic_name_fr", "ingredients", 
-            "ingredients_hierarchy", "link", "nutriments", "nutriscore_grade", "nutriscore_version", "nutrition_grade_fr", 
+            "ingredients_hierarchy", "nutriments", "nutriscore_grade", "nutriscore_version", "nutrition_grade_fr", 
             "origins", "packaging_hierarchy", "product_name", "product_name_fr", "product_type", "additives_tags"]
 
 
@@ -29,11 +29,10 @@ RAW_DATA_SCHEMA_OFF = StructType([
         StructField("countries", StringType(), True),
         StructField("countries_imported", StringType(), True),
         StructField("ecoscore_grade", StringType(), True),
-        StructField("ecoscore_score", IntegerType(), True),
+        StructField("ecoscore_score", DoubleType(), True),
         StructField("generic_name_fr", StringType(), True),
-        StructField("ingredients", INGREDIENTS_SCHEMA, True),
+        StructField("ingredients", StringType(), True),
         StructField("ingredients_hierarchy", ArrayType(StringType()), True),
-        StructField("link", StringType(), True),
         StructField("nutriments", StringType(), True),
         StructField("nutriscore_grade", StringType(), True),
         StructField("nutriscore_version", StringType(), True),
@@ -47,4 +46,4 @@ RAW_DATA_SCHEMA_OFF = StructType([
     ])
 
 
-RAW_DATA_ARRAY_FIELDS = ["_keywords", "categories_hierarchy", "ingredients", "ingredients_hierarchy", "packaging_hierarchy", "additives_tags"]
+RAW_DATA_ARRAY_FIELDS = ["_keywords", "categories_hierarchy", "ingredients_hierarchy", "packaging_hierarchy", "additives_tags"]

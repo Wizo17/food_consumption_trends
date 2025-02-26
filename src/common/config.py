@@ -28,12 +28,18 @@ class Configuration:
                 "DB_POSTGRES_NAME": os.getenv("DB_POSTGRES_NAME"),
                 "DB_POSTGRES_USER": os.getenv("DB_POSTGRES_USER"),
                 "DB_POSTGRES_PASSWORD": os.getenv("DB_POSTGRES_PASSWORD"),
-                "DB_POSTGRES_DEFAULT_SCHEMA": os.getenv("DB_POSTGRES_DEFAULT_SCHEMA"),
-                "DB_POSTGRES_DEFAULT_RAW_TABLE": os.getenv("DB_POSTGRES_DEFAULT_RAW_TABLE")
+                "DB_POSTGRES_DEFAULT_SCHEMA": os.getenv("DB_POSTGRES_DEFAULT_SCHEMA")
             },
             "GCP": {
                 "GCP_PROJECT_ID": os.getenv("GCP_PROJECT_ID"),
                 "GCP_BIGQUERY_DATASET": os.getenv("GCP_BIGQUERY_DATASET")
+            },
+            "DATASET": {
+                "DEFAULT_RAW_TABLE": os.getenv("DEFAULT_RAW_TABLE")
+            },
+            "DEV": {
+                "DEV_SPARK_MEMORY": os.getenv("DEV_SPARK_MEMORY"),
+                "DEV_LIMIT_SIZE_DATA": os.getenv("DEV_LIMIT_SIZE_DATA")
             }
         }
     
