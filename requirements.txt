@@ -4,4 +4,4 @@ SQLAlchemy
 python-dotenv
 setuptools
 openfoodfacts
-pyspark
+
