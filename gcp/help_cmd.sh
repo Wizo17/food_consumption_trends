@@ -84,19 +84,7 @@ gsutil cp -r gcp/init_create_dataproc_cluster.sh gs://$BUCKET_NAME/source_code/
         --project $PROJECT_ID
 
 
-############################################ Run init job ############################################
-
-gcloud dataproc jobs submit pyspark \
-        --cluster "$CLUSTER_NAME" \
-        --region "$REGION" \
-        --py-files "gs://$BUCKET_NAME/source_code/etl_source_code.zip" \
-        --files "gs://$BUCKET_NAME/source_code/.env" \
-        --format='value(reference.jobId)' \
-        src/init.py
-
-
-############################################ Run etl job ############################################
-
+############################################ Run main job ############################################
 
 gcloud dataproc jobs submit pyspark \
         --cluster "$CLUSTER_NAME" \
@@ -105,5 +93,25 @@ gcloud dataproc jobs submit pyspark \
         --files "gs://$BUCKET_NAME/source_code/.env" \
         --format='value(reference.jobId)' \
         src/main.py
+
+
+
+
+############################################ Create spark bigquery connexion ############################################
+
+
+bq mk --connection \
+    --connection_type=SPARK \
+    --location=europe-west9 \
+    spark-process-bigquery
+
+
+############################################ Transform data (normaly bigquery) ############################################
+
+gcloud dataproc jobs submit pyspark \
+        --cluster "$CLUSTER_NAME" \
+        --region "$REGION" \
+        --format='value(reference.jobId)' \
+        gcp/bigquery/transform_off_raw_data.py
 
 

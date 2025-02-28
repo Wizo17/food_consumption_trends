@@ -4,4 +4,6 @@ SQLAlchemy
 python-dotenv
 setuptools
 openfoodfacts
-
+# pyspark
+# google-cloud
+# google-cloud-bigquery
