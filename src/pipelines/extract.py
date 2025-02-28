@@ -10,8 +10,8 @@ def get_open_food_fact_dataset(size = 0):
 
     if size < 0:
         return []
-    if global_conf.get('GENERAL.ENV') == "dev" and (size == 0 or size > int(global_conf.get('DEV.DEV_LIMIT_SIZE_DATA'))):
-        size = int(global_conf.get('DEV.DEV_LIMIT_SIZE_DATA'))
+    if size == 0 or size > int(global_conf.get('GENERAL.LIMIT_SIZE_DATA')):
+        size = int(global_conf.get('GENERAL.LIMIT_SIZE_DATA'))
     
     dataset = ProductDataset()
     product_list = []

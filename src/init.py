@@ -5,13 +5,14 @@ from common.utils import log_message
 from common.config import global_conf
 from pipelines.raw_data_infos import RAW_DATA_SCHEMA_OFF
 from services.postgres import write_to_postgres
+from services.bigquery import write_to_bq
 
 
 def main():
     res = True
 
     try:
-        spark = SparkSessionInstance.get_instance()
+        spark = SparkSessionInstance.get_instance(500000)
         dataset = get_open_food_fact_dataset()
         # log_message("INFO", f"test: {dataset[:2]}")
 

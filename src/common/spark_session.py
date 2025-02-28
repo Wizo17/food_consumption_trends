@@ -24,15 +24,13 @@ class SparkSessionInstance:
                                                     .config("spark.files.cleanupTime", "0") \
                                                     .config("spark.shuffle.service.enabled", "false") \
                                                     .config("spark.sql.debug.maxToStringFields", "1000") \
-                                                    .config("spark.driver.memory", global_conf.get('DEV.DEV_SPARK_MEMORY')) \
-                                                    .config("spark.executor.memory", global_conf.get('DEV.DEV_SPARK_MEMORY')) \
+                                                    .config("spark.driver.memory", global_conf.get('GENERAL.SPARK_DRIVER_MEMORY')) \
+                                                    .config("spark.executor.memory", global_conf.get('GENERAL.SPARK_EXECUTOR_MEMORY')) \
                                                     .master("local[*]") \
                                                     .getOrCreate()
             else:
                 SparkSessionInstance._instance = SparkSession.builder \
                                                     .appName(f"GLOBAL: {global_conf.get('GENERAL.APP_NAME')}") \
-                                                    .config("spark.driver.memory", "14g") \
-                                                    .config("spark.executor.memory", "14g") \
                                                     .getOrCreate()
         
         log_message("INFO", f"SparkSession started with version: {SparkSessionInstance._instance.version}")

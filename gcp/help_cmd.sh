@@ -6,6 +6,8 @@ REGION=europe-west9
 PROJECT_NUMBER=221748092362
 CLUSTER_NAME="cluster-spark-analytics"
 BUCKET_NAME="food_consumption_trends"
+DATASET_NAME="food_consumption_trends"
+DEFAULT_RAW_TABLE=raw_data_off
 
 
 gcloud config set project $PROJECT_ID
@@ -19,7 +21,21 @@ gsutil mb gs://$BUCKET_NAME/source_code/
 
 
 ############################################ BigQuery ############################################
-bq mk --location=EU "$BUCKET_NAME"
+bq mk --location=EU "$DATASET_NAME"
+
+
+# bq show $PROJECT_ID:$DATASET_NAME.$DEFAULT_RAW_TABLE
+# bq show --schema --format=prettyjson $PROJECT_ID:$DATASET_NAME.$DEFAULT_RAW_TABLE
+# SELECT
+#   *
+# FROM
+#   `analytics-trafic-idfm.food_consumption_trends.INFORMATION_SCHEMA.COLUMNS`
+# WHERE
+#   table_name = 'raw_data_off'
+# ORDER BY
+#   ordinal_position
+# ;
+
 
 
 ############################################ Rights ############################################
@@ -73,8 +89,8 @@ gsutil cp -r gcp/init_create_dataproc_cluster.sh gs://$BUCKET_NAME/source_code/
 gcloud dataproc jobs submit pyspark \
         --cluster "$CLUSTER_NAME" \
         --region "$REGION" \
-        --py-files "gs://analytics_trafic_idfm/source_code/etl_source_code.zip" \
-        --files "gs://analytics_trafic_idfm/source_code/.env" \
+        --py-files "gs://$BUCKET_NAME/source_code/etl_source_code.zip" \
+        --files "gs://$BUCKET_NAME/source_code/.env" \
         --format='value(reference.jobId)' \
         src/init.py
 
@@ -85,8 +101,9 @@ gcloud dataproc jobs submit pyspark \
 gcloud dataproc jobs submit pyspark \
         --cluster "$CLUSTER_NAME" \
         --region "$REGION" \
-        --py-files "gs://analytics_trafic_idfm/source_code/etl_source_code.zip" \
-        --files "gs://analytics_trafic_idfm/source_code/.env" \
+        --py-files "gs://$BUCKET_NAME/source_code/etl_source_code.zip" \
+        --files "gs://$BUCKET_NAME/source_code/.env" \
         --format='value(reference.jobId)' \
         src/main.py
+
 

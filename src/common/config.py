@@ -20,7 +20,10 @@ class Configuration:
                 "ENV": os.getenv("ENV"),
                 "APP_NAME": os.getenv("APP_NAME"),
                 "SPARK_JDBC_PATH": os.getenv("SPARK_JDBC_PATH"),
-                "SPARK_HOST": os.getenv("SPARK_HOST")
+                "SPARK_HOST": os.getenv("SPARK_HOST"),
+                "SPARK_DRIVER_MEMORY": os.getenv("SPARK_DRIVER_MEMORY"),
+                "SPARK_EXECUTOR_MEMORY": os.getenv("SPARK_EXECUTOR_MEMORY"),
+                "LIMIT_SIZE_DATA": os.getenv("LIMIT_SIZE_DATA")
             },
             "POSTGRES": {
                 "DB_POSTGRES_HOST": os.getenv("DB_POSTGRES_HOST"),
@@ -36,10 +39,6 @@ class Configuration:
             },
             "DATASET": {
                 "DEFAULT_RAW_TABLE": os.getenv("DEFAULT_RAW_TABLE")
-            },
-            "DEV": {
-                "DEV_SPARK_MEMORY": os.getenv("DEV_SPARK_MEMORY"),
-                "DEV_LIMIT_SIZE_DATA": os.getenv("DEV_LIMIT_SIZE_DATA")
             }
         }
     
