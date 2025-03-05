@@ -108,6 +108,7 @@ bq mk --connection \
 
 ############################################ Transform data (normaly bigquery) ############################################
 
+# Only if you don't want to go through bigquery
 gcloud dataproc jobs submit pyspark \
         --cluster "$CLUSTER_NAME" \
         --region "$REGION" \
