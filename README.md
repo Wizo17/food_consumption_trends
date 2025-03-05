@@ -41,15 +41,18 @@ You need an GCP account.
 
 ### GCP
 
+0. **!!!Be carreful!!!**, If you don't include enough data, the statistics may be distorted.
 1. Have a GCP account or create an account with a free trial product.
 2. Create a new project.
 3. Use the console to create elements.
 4. Follow script instructions [help_cmd.sh](gcp/help_cmd.sh) to create only your own elements.
 5. **!!!Attention!!!**, you don't need to run the whole script and you need to update the commands with your own information.
-6. [transform_off_raw_data.py](gcp/transform_off_raw_data.py) contains the code for a bigquery stored procedure.
+6. [transform_off_raw_data.py](gcp/bigquery/transform_off_raw_data.py) contains the code for a bigquery stored procedure.
 7. You can do all the data analysis you want with the data.
 8. Sample queries can be found in the gcp/bigquery folder.
 9. A sample report can be found [here](gcp/report/Analysis_food_sample.pdf)
+10. For the ML part, examples of queries for creating a model can be found [here](gcp/bigquery/bigquery_ml.sql).
+11. Once you have created the models, you can predict the clusters and compare them with the nutriscore.
 
 
 ## Versions
